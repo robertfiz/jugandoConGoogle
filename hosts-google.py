@@ -3,7 +3,7 @@ from urlparse import urlparse
 
 if len(sys.argv) != 2:
 	print "Debe pasarle un argumento"
-	print "Ejemplo de uso: python hosts-google.py ejemplo.com"
+	print "Ejemplo de uso: python hosts-google.py google.com"
 	exit(1)
 else:
 	url = 'https://www.google.com/xhtml?'		
@@ -15,11 +15,15 @@ else:
 	data = urllib.urlencode(query_string)
 	url = url + data
 	headers = {'User-Agent' : 'Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3 (FM Scene 4.6.1)', 'Referer' : 'http://127.0.0.1/'} # $
-	req = urllib2.Request(url, None, headers)
-	google_reply = urllib2.urlopen(req).read()
-	regex = '<h3 class="r"><a href="/url(.+?)">' # search urls on google's $
-	pattern = re.compile(regex)
-	url_links = re.findall(pattern, google_reply)
+	try:
+                req = urllib2.Request(url, None, headers)
+                google_reply = urllib2.urlopen(req).read()
+                regex = '<h3 class="r"><a href="/url(.+?)">'
+                pattern = re.compile(regex)
+                url_links = re.findall(pattern, google_reply)
+        except urllib2.URLError:
+                pass
+
 	hosts=[]
 	ips=[]
 	for url in url_links:
