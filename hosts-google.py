@@ -36,4 +36,4 @@ else:
                         pass
 
 
-return hosts
+	return hosts
