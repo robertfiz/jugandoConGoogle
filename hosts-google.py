@@ -36,4 +36,4 @@ else:
                         pass
 
 
-	print hosts
+	for host in hosts:
