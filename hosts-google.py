@@ -35,5 +35,3 @@ else:
                 except socket.error:
                         pass
 
-
-	for host in hosts:
