@@ -36,12 +36,4 @@ else:
                         pass
 
 
-	archi=open("host-google","a")
-	for host in hosts:
-		try:
-			aux=host.strip('http://');
-			print host+" "+socket.gethostbyname(aux)
-			archi.write(host+" "+socket.gethostbyname(aux)+"\n")
-		except socket.error:
-			pass
-	archi.close()
+return hosts
