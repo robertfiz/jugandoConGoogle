@@ -1,8 +1,17 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+'''
+Faraday Penetration Test IDE
+Copyright (C) 2013  Infobyte LLC (http://www.infobytesec.com/)
+See the file 'doc/LICENSE' for the license information
+'''
+
 import sys,StringIO, urllib, urllib2, cgi, re, socket
 from urlparse import urlparse
+from plugins import core
 
-
-Class Google(core.PluginBase):
+class google_Hosts(core.PluginBase):
 
 	def __init__(self):
         	core.PluginBase.__init__(self)
@@ -12,7 +21,7 @@ Class Google(core.PluginBase):
         	self.version = "2.1.1"
         	self.host = "google.com"
 	
-	def busca(self):
+        def parseOutputString(self, output, debug = False):
 		url = 'https://www.google.com/xhtml?'		
 		q = 'site:'+self.host
 		start=0
@@ -38,16 +47,18 @@ Class Google(core.PluginBase):
 			try:
 				d=urlparse(url2)
 				if d.netloc not in hosts:
-					  hosts.append(d.netloc)	
+
+		         		ip = socket.gethostbyname(d.netloc)
+            	         		puerto = 80 
+			 		host_id = self.createAndAddHost(ip)
+			 		iface_id = self.createAndAddInterface(host_id, ip, ipv4_address = ip)
+			 		serv_id  = self.createAndAddServiceToInterface(host_id, iface_id, "http", protocol = "http", ports = puerto, status= null)
+			 		self.createAndAddNoteToService(host_id, serv_id, 'Host List', d.netloc)
+						
                 	except socket.error:
                         	pass
 			
-		         ip = socket.gethostbyname(host)
-            	         puerto = 80 
-			 host_id = self.createAndAddHost(ip)
-			 iface_id = self.createAndAddInterface(host_id, ip, ipv4_address = ip)
-			 serv_id  = self.createAndAddServiceToInterface(host_id, iface_id, "http", protocol = "https", ports = puerto, status)
-			 self.createAndAddNoteToService(host_id, serv_id, 'Host List' hosts)
 
 def createPlugin():
-	return Google() 
+	return google_Hosts() 
+
