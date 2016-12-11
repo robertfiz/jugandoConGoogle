@@ -2,7 +2,7 @@ import sys,StringIO, urllib, urllib2, cgi, re, socket
 from urlparse import urlparse
 
 
-Class Google():
+Class Google(core.PluginBase):
 
 	def __init__(self):
         	core.PluginBase.__init__(self)
@@ -42,3 +42,12 @@ Class Google():
                 	except socket.error:
                         	pass
 			
+		         ip = socket.gethostbyname(host)
+            	         puerto = 80 
+			 host_id = self.createAndAddHost(ip)
+			 iface_id = self.createAndAddInterface(host_id, ip, ipv4_address = ip)
+			 serv_id  = self.createAndAddServiceToInterface(host_id, iface_id, "http", protocol = "https", ports = puerto, status)
+			 self.createAndAddNoteToService(host_id, serv_id, 'Host List' hosts)
+
+def createPlugin():
+	return Google() 
