@@ -1,17 +1,8 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-'''
-Faraday Penetration Test IDE
-Copyright (C) 2013  Infobyte LLC (http://www.infobytesec.com/)
-See the file 'doc/LICENSE' for the license information
-'''
-
 import sys,StringIO, urllib, urllib2, cgi, re, socket
 from urlparse import urlparse
 
 
-Class Google(core.PluginBase):
+Class Google():
 
 	def __init__(self):
         	core.PluginBase.__init__(self)
@@ -51,10 +42,3 @@ Class Google(core.PluginBase):
                 	except socket.error:
                         	pass
 			
-		         ip = socket.gethostbyname(host)
-            	         puerto = 80 
-			 host_id = self.createAndAddHost(ip)
-			 iface_id = self.createAndAddInterface(host_id, ip, ipv4_address = ip)
-			 serv_id  = self.createAndAddServiceToInterface(host_id, iface_id, "http", protocol = "https", ports = puerto, status)
-			 self.createAndAddNoteToService(host_id, serv_id, 'Host List' hosts)
-	
